@@ -1,4 +1,4 @@
-package custom_http
+package customHttp
 
 import "fmt"
 
