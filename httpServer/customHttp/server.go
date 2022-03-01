@@ -10,7 +10,8 @@ type Server struct {
 	Router map[string]Controller
 }
 
-func (s Server) Listen() error {
+// In general all methods on a given type, should have either value or pointer receivers, but not both !!!
+func (s *Server) Listen() error {
 	listener, err := net.Listen("tcp", fmt.Sprintf(":%v", s.Port))
 
 	if err != nil {
