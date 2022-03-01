@@ -1,12 +1,13 @@
 package main
 
 import (
+	"log"
+
 	"github.com/svetlimladenov/go-samples/httpServer/customHttp"
 )
 
 const (
 	PORT = 3000
-	HOST = "0.0.0.0"
 )
 
 var router = map[string]customHttp.Controller{
@@ -14,5 +15,13 @@ var router = map[string]customHttp.Controller{
 }
 
 func main() {
-	customHttp.Listen(PORT, router)
+	server := customHttp.Server{
+		Port:   PORT,
+		Router: router,
+	}
+
+	err := server.Listen()
+	if err != nil {
+		log.Fatal(err)
+	}
 }
