@@ -1,9 +1,7 @@
-package httpServer
+package main
 
 import (
-	"fmt"
-
-	"github.com/svetlimladenov/go-samples/http-server/customHttp"
+	"github.com/svetlimladenov/go-samples/httpServer/customHttp"
 )
 
 const (
@@ -11,7 +9,10 @@ const (
 	HOST = "0.0.0.0"
 )
 
+var router = map[string]customHttp.Controller{
+	"/hello-world": HelloWorldController{},
+}
+
 func main() {
-	fmt.Printf("Server listening on %v:%v\n", HOST, PORT)
-	customHttp.Listen()
+	customHttp.Listen(PORT, router)
 }

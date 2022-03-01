@@ -1,29 +1,45 @@
 package customHttp
 
-import "errors"
-
-type HttpMethod int64
-
-const (
-	GET HttpMethod = iota
-	POST
-	PUT
-	PATCH
-	DELETE
+import (
+	"errors"
+	"strings"
 )
 
-type HttpRequst struct {
-	Method HttpMethod
-	Body   string
+type Headers map[string]string
+
+type HttpRequest struct {
+	Method   string
+	Path     string
+	Protocol string
+	Headers  Headers
+	Body     string
 }
 
-func parseHttpRequest(req string) (HttpRequst, error) {
+type HttpResponse struct {
+	Code     int
+	Protocol string
+	Date     string
+	Headers  Headers
+	Body     string
+}
+
+func parseHttpRequest(req string) (HttpRequest, error) {
 	if req == "" {
-		return HttpRequst{}, errors.New("the request body cannot be empty")
+		return HttpRequest{}, errors.New("the request body cannot be empty")
 	}
 
-	return HttpRequst{
-		Method: GET,
-		Body:   req,
+	reqLines := strings.Split(req, "\n")
+
+	method, path, protocol := parseReqLine(reqLines[0])
+
+	return HttpRequest{
+		Method:   method,
+		Protocol: protocol,
+		Path:     path,
 	}, nil
+}
+
+func parseReqLine(line string) (string, string, string) {
+	lineParts := strings.Split(line, " ")
+	return lineParts[0], lineParts[1], lineParts[2]
 }
