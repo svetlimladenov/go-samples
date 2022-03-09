@@ -10,5 +10,5 @@ type Logger interface {
 }
 
 func formatLog(msg string) string {
-	return fmt.Sprintf("[%v]:%v", time.Now().String(), msg)
+	return fmt.Sprintf("[%v]:%v\n", time.Now().String(), msg)
 }
