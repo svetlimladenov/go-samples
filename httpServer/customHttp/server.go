@@ -36,7 +36,7 @@ func handleConnection(conn net.Conn, router map[string]Controller) {
 
 	req, err := parseHttpRequest(reqString)
 	if err != nil {
-		fmt.Println("Something went wrong, can't parse the request")
+		fmt.Println(err.Error())
 		return
 	}
 
